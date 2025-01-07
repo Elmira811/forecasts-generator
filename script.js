@@ -9,12 +9,16 @@ function getRandomInt(min, max) {
 }
 
 function makeMyPrediction(prediction, probability) {
+  if(!prediction || !probability) {
+    return;
+  }
+
   const myPrediction = forecastItem.content.cloneNode(true);
 
   myPrediction.querySelector('.forecast-item h3').textContent = prediction;
   myPrediction.querySelector('.forecast-item p').textContent = probability;
 
-  return myPrediction;
+  container.prepend(myPrediction);
 }
 
 button.addEventListener('click', function() {
@@ -38,18 +42,13 @@ button.addEventListener('click', function() {
       predictionText = "Скоро исполнится заветное желание";
       break;
   }
+
+  makeMyPrediction(currentForecast.textContent, percent.textContent);
   
   currentForecast.textContent = predictionText;
 
   percent.textContent = `Вероятность: ${getRandomInt(0, 100)}%`;
-
-  const forecastCard = makeMyPrediction(currentForecast.textContent, percent.textContent);
-  
-  button.addEventListener('click', function() {
-    container.prepend(forecastCard);
-  })
 })
-
 
 
 
